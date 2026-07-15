@@ -1,0 +1,2728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中铁联集经营管理平台西安分公司 - 原型图</title>
+<style>
+/* ===== Global Reset ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: Microsoft YaHei, PingFang SC, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
+}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* ===== Prototype Badge ===== */
+/* ===== Page Container ===== */
+.page-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Header ===== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  background: linear-gradient(135deg, #2c8cf0 0%, #1a6fd4 100%);
+  color: #fff;
+  padding: 0 24px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(44, 140, 240, 0.3);
+  position: relative;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #0d6abb;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-logo {
+  width: 32px; height: 32px;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.header-logo img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
+.header-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+.header-avatar {
+  width: 30px; height: 30px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+}
+
+/* ===== Main Layout ===== */
+.main-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  background: linear-gradient(180deg, #f8faff 0%, #ffffff 100%);
+  border-right: 1px solid #e8e8e8;
+  overflow-y: auto;
+  flex-shrink: 0;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+}
+.menu-section {
+  border-bottom: 1px solid #f0f0f0;
+}
+.menu-item {
+  padding: 14px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  transition: background 0.2s;
+  color: #333;
+}
+.menu-item:hover { background: #f7f7f7; }
+.menu-item.active { color: #1077de; font-weight: 600; border-left: 3px solid #1077de; }
+.menu-item .arrow {
+  font-size: 12px;
+  transition: transform 0.2s;
+  color: #999;
+}
+.menu-item.active .arrow { color: #1077de; }
+.menu-item .arrow.open { transform: rotate(90deg); }
+
+.sub-menu {
+  border-top: 1px dashed #e8e8e8;
+  display: none;
+}
+.sub-menu.open { display: block; }
+.sub-menu li {
+  list-style: none;
+  padding: 10px 20px 10px 56px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+  position: relative;
+}
+.sub-menu li::before {
+  content: '';
+  position: absolute;
+  left: 36px;
+  top: 50%;
+  width: 4px; height: 16px;
+  border-radius: 2px;
+  background: #ccc;
+  transform: translateY(-50%);
+  transition: background 0.2s;
+}
+.sub-menu li:hover { color: #1077de; background: #f7f7f7; }
+.sub-menu li:hover::before { background: #1077de; }
+.sub-menu li.active {
+  color: #1077de;
+  font-weight: 600;
+  background: #f0f7ff;
+}
+.sub-menu li.active::before {
+  background: #1077de;
+}
+
+/* ===== Content Area ===== */
+.content-area {
+  flex: 1;
+  background: #f5f7fa;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Nav Tabs Bar ===== */
+.nav-tabs-bar {
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 12px 20px 0 20px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+  min-height: 50px;
+}
+.nav-tab {
+  padding: 10px 28px 10px 16px;
+  font-size: 13px;
+  color: #666;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  transition: all 0.25s;
+  margin-bottom: -1px;
+  position: relative;
+  line-height: 1.4;
+}
+.nav-tab:hover {
+  color: #1077de;
+  background: #f5f9ff;
+}
+.nav-tab:hover .tab-close {
+  opacity: 1;
+}
+.nav-tab.active {
+  color: #1077de;
+  background: #f5f7fa;
+  border-color: #d6e4ff;
+  border-bottom: 2px solid #fff;
+  font-weight: 600;
+  z-index: 1;
+}
+.nav-tab.active:hover .tab-close {
+  opacity: 1;
+}
+.tab-close {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  font-size: 14px;
+  line-height: 1;
+  color: #999;
+  opacity: 0;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.tab-close:hover {
+  background: #ff4d4f;
+  color: #fff;
+}
+.nav-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #1077de;
+  border-radius: 3px 3px 0 0;
+}
+
+/* ===== Page Wrapper ===== */
+.page-wrapper {
+  flex: 1;
+  overflow: hidden;
+}
+.page-content {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+}
+.page-content.active { display: flex; }
+
+/* ===== Content Body ===== */
+.content-body {
+  padding: 16px 24px 24px;
+}
+
+/* ===== Filter Section ===== */
+.filter-section {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+.filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #eff6ff 0%, #e8f4ff 100%);
+  border-bottom: 1px solid #e8e8e8;
+  border-radius: 4px 4px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  border-left: 3px solid #1077de;
+}
+.filter-body {
+  padding: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  align-items: flex-end;
+}
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.filter-item label {
+  font-size: 12px;
+  color: #666;
+}
+.filter-item input,
+.filter-item select {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 0 10px;
+  font-size: 13px;
+  outline: none;
+  min-width: 160px;
+  transition: border-color 0.2s;
+}
+.filter-item input:focus,
+.filter-item select:focus {
+  border-color: #1077de;
+  box-shadow: 0 0 0 2px rgba(16,119,222,0.1);
+}
+.filter-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: #333;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn:hover { border-color: #1077de; color: #1077de; }
+.btn-primary {
+  background: linear-gradient(180deg, #2c8cf0 0%, #1077de 100%);
+  border-color: #1077de;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(16,119,222,0.3);
+}
+.btn-primary:hover { background: linear-gradient(180deg, #1a7de0 0%, #0d6abb 100%); border-color: #0d6abb; color: #fff; }
+.btn-outline {
+  background: #fff;
+  border-color: #1077de;
+  color: #1077de;
+}
+.btn-outline:hover { background: #e8f2fc; }
+.btn-success { background: #52c41a; border-color: #52c41a; color: #fff; }
+.btn-success:hover { background: #45a817; }
+.btn-danger { background: #ff4d4f; border-color: #ff4d4f; color: #fff; }
+.btn-danger:hover { background: #e04042; }
+.btn-sm { height: 26px; padding: 0 10px; font-size: 12px; }
+.btn-link {
+  border: none;
+  background: none;
+  color: #1077de;
+  padding: 0 4px;
+  height: auto;
+}
+.btn-link:hover { color: #0d6abb; text-decoration: underline; }
+.btn-link.danger { color: #ff4d4f; }
+.btn-link.danger:hover { color: #e04042; }
+
+/* ===== Table Section ===== */
+.table-section {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.table-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.table-header-bar .title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+.table-wrapper {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  table-layout: auto;
+}
+thead th {
+  background: linear-gradient(180deg, #f8faff 0%, #f0f5ff 100%);
+  padding: 10px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 1px solid #e8e8e8;
+  white-space: nowrap;
+}
+tbody td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+  white-space: nowrap;
+}
+tbody tr:nth-child(even) { background: #fafafa; }
+tbody tr:hover { background: #e3f0ff; }
+td.amount {
+  text-align: right;
+  font-family: Consolas, Monaco, monospace;
+  white-space: nowrap;
+}
+td .link {
+  color: #1077de;
+  cursor: pointer;
+  text-decoration: none;
+}
+td .link:hover { text-decoration: underline; }
+
+/* ===== Status Tags ===== */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1.5;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.tag-green { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
+.tag-blue { background: #e6f7ff; color: #1890ff; border: 1px solid #91d5ff; }
+.tag-orange { background: #fff7e6; color: #fa8c16; border: 1px solid #ffd591; }
+.tag-red { background: #fff2f0; color: #ff4d4f; border: 1px solid #ffccc7; }
+.tag-gray { background: #f5f5f5; color: #999; border: 1px solid #d9d9d9; }
+
+/* ===== Checkbox ===== */
+.checkbox {
+  width: 16px; height: 16px;
+  cursor: pointer;
+  accent-color: #1077de;
+}
+
+/* ===== Pagination ===== */
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 16px;
+  gap: 8px;
+  border-top: 1px solid #f0f0f0;
+}
+.pagination-info {
+  font-size: 12px;
+  color: #999;
+  margin-right: 8px;
+}
+.pagination-list {
+  display: flex;
+  gap: 4px;
+}
+.page-btn {
+  min-width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #333;
+  background: #fff;
+  transition: all 0.2s;
+  padding: 0 4px;
+}
+.page-btn:hover { border-color: #1077de; color: #1077de; }
+.page-btn.active {
+  background: #1077de;
+  border-color: #1077de;
+  color: #fff;
+}
+.page-btn.disabled { color: #ccc; cursor: not-allowed; }
+.page-size-select {
+  height: 28px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 0 8px;
+  outline: none;
+}
+
+/* ===== Yard Tabs ===== */
+.yard-tabs-bar {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.yard-tab {
+  padding: 10px 24px;
+  font-size: 13px;
+  cursor: pointer;
+  border-right: 1px solid #e8e8e8;
+  background: #fff;
+  color: #666;
+  transition: all 0.2s;
+}
+.yard-tab:last-child { border-right: none; }
+.yard-tab:hover { color: #1077de; }
+.yard-tab.active {
+  background: #e8f2fc;
+  color: #1077de;
+  font-weight: 600;
+  border-bottom: 2px solid #1077de;
+}
+
+/* ===== Modal / Dialog ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.active { display: flex; }
+.modal-dialog {
+  background: #fff;
+  border-radius: 8px;
+  width: 720px;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+}
+.modal-title {
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #fafbfc 0%, #f5f7fa 100%);
+}
+.modal-close {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 18px;
+  color: #999;
+  transition: all 0.2s;
+}
+.modal-close:hover { background: #f5f5f5; color: #333; }
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+.modal-footer {
+  padding: 12px 24px;
+  border-top: 1px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ===== Product Cards ===== */
+.product-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.product-card {
+  border: 1px solid #e8e8e8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.product-card-header {
+  background: #f7f9fc;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 1px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.product-card-body { padding: 12px 16px; }
+.product-type-tag {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: #e8f2fc;
+  color: #1077de;
+  border: 1px solid #b3d8ff;
+}
+.supplier-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 8px;
+}
+.supplier-table th {
+  background: #fafafa;
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid #e8e8e8;
+}
+.supplier-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.supplier-table td.amount {
+  text-align: right;
+  font-family: Consolas, Monaco, monospace;
+}
+
+/* ===== Summary Section ===== */
+.summary-section {
+  margin-top: 20px;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #e8e8e8;
+}
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+.summary-row:not(:last-child) { border-bottom: 1px solid #f0f0f0; }
+.summary-label { font-size: 14px; color: #666; }
+.summary-value { font-size: 16px; font-weight: 600; font-family: Consolas, Monaco, monospace; }
+.summary-value.blue { color: #1077de; }
+.summary-value.red { color: #ff4d4f; }
+
+/* ===== Warning Footer ===== */
+.modal-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #d48806;
+  margin-top: 16px;
+}
+.warning-icon {
+  flex-shrink: 0;
+  width: 16px; height: 16px;
+  border: 2px solid #faad14;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: #faad14;
+  margin-top: 1px;
+}
+
+/* ===== Footer ===== */
+.page-footer {
+  text-align: center;
+  padding: 16px;
+  background: #fff;
+  border-top: 1px solid #e8e8e8;
+  font-size: 12px;
+  color: #999;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .sidebar { width: 180px; min-width: 180px; }
+  .content-body { padding: 12px 16px 16px; }
+}
+@media (max-width: 768px) {
+  .sidebar { width: 60px; min-width: 60px; }
+  .menu-item span:first-child { display: none; }
+  .menu-item .arrow { display: none; }
+  .sub-menu li { padding: 10px 10px 10px 16px; }
+  .sub-menu li::before { left: 10px; }
+  .content-body { padding: 8px; }
+  .filter-body { flex-direction: column; }
+  .filter-item input, .filter-item select { min-width: 120px; }
+}
+
+/* ===== Drawer (侧边抽屉) ===== */
+.drawer-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 1100;
+}
+.drawer-overlay.active { display: block; }
+.drawer-panel {
+  position: fixed;
+  top: 0; right: 0;
+  width: 680px;
+  height: 100vh;
+  background: #fff;
+  border-left: 1px solid #e8e8e8;
+  z-index: 1101;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  box-shadow: -4px 0 16px rgba(0,0,0,0.08);
+}
+.drawer-panel.active { transform: translateX(0); }
+.drawer-panel .drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e8e8e8;
+  background: linear-gradient(135deg, #fafbfc 0%, #f5f7fa 100%);
+  flex-shrink: 0;
+}
+.drawer-panel .drawer-header span:first-child {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
+.drawer-panel .drawer-header .drawer-close {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border-radius: 4px;
+  font-size: 18px; color: #999; transition: all 0.2s;
+}
+.drawer-panel .drawer-header .drawer-close:hover { background: #f5f5f5; color: #333; }
+.drawer-panel .drawer-body {
+  flex: 1; padding: 20px; overflow-y: auto;
+}
+.drawer-panel .drawer-footer {
+  padding: 12px 20px;
+  border-top: 1px solid #e8e8e8;
+  display: flex; align-items: center;
+  justify-content: flex-end; gap: 8px;
+  background: #fafafa;
+  flex-shrink: 0;
+}
+.drawer-form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+.drawer-form-group label {
+  width: 110px; min-width: 110px;
+  font-size: 13px; color: #555;
+  text-align: right;
+}
+.drawer-form-group input,
+.drawer-form-group select {
+  flex: 1; padding: 7px 10px;
+  border: 1px solid #d9d9d9; border-radius: 4px;
+  background: #fff; font-size: 13px;
+  font-family: inherit; color: #333; outline: none;
+  transition: border-color 0.2s;
+}
+.drawer-form-group input:focus,
+.drawer-form-group select:focus {
+  border-color: #1077de;
+  box-shadow: 0 0 0 2px rgba(16,119,222,0.1);
+}
+
+/* ===== Detail Section (详情弹框内) ===== */
+.detail-section {
+  padding: 16px 20px;
+}
+.detail-section + .detail-section {
+  border-top: 1px solid #eee;
+}
+.detail-section-title {
+  font-size: 14px; font-weight: 600;
+  color: #333; margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+.detail-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+}
+.detail-form-item {
+  display: flex; align-items: center; gap: 8px;
+}
+.detail-form-item label {
+  width: 110px; min-width: 110px;
+  font-size: 13px; color: #555;
+  text-align: right;
+}
+.detail-form-item .value {
+  flex: 1; font-size: 13px; color: #333;
+  padding: 7px 10px; border: 1px solid #eee;
+  background: #fafafa; border-radius: 4px;
+  min-height: 36px; display: flex;
+  align-items: center;
+}
+
+/* ===== Form Group (弹框表单) ===== */
+.modal-form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+.modal-form-group label {
+  width: 110px; min-width: 110px;
+  font-size: 13px; color: #555;
+  text-align: right; flex-shrink: 0;
+}
+.modal-form-group input,
+.modal-form-group select,
+.modal-form-group textarea {
+  flex: 1; padding: 7px 10px;
+  border: 1px solid #d9d9d9; border-radius: 4px;
+  background: #fff; font-size: 13px;
+  font-family: inherit; color: #333; outline: none;
+  transition: border-color 0.2s;
+}
+.modal-form-group input:focus,
+.modal-form-group select:focus,
+.modal-form-group textarea:focus {
+  border-color: #1077de;
+  box-shadow: 0 0 0 2px rgba(16,119,222,0.1);
+}
+.modal-form-group textarea {
+  min-height: 80px; resize: vertical;
+}
+.modal-form-group .required {
+  color: #ff4d4f; margin-left: 2px;
+}
+
+/* ===== Small modal (inner modal) ===== */
+.modal-dialog-inner {
+  background: #fff;
+  border-radius: 8px;
+  width: 560px;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+  z-index: 1200;
+}
+</style>
+</head>
+<body>
+
+<!-- Page Container -->
+<div class="page-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-logo"><img src="logo.png" alt="logo"></div>
+      <div class="header-title">中铁联集经营管理平台西安分公司</div>
+    </div>
+    <div class="header-right">
+      <span>管理员</span>
+      <div class="header-avatar">A</div>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="main-layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- 合同管理 -->
+      <div class="menu-section">
+        <div class="menu-item active" onclick="toggleMenu('contract')">
+          <span>合同管理</span>
+          <span class="arrow open">▶</span>
+        </div>
+        <ul class="sub-menu open" id="sub-contract">
+          <li class="active" onclick="switchPage('sealRecord')">印章使用记录</li>
+        </ul>
+      </div>
+
+      <!-- 经营业务管理 -->
+      <div class="menu-section">
+        <div class="menu-item" onclick="toggleMenu('bizMgmt')">
+          <span>经营业务管理</span>
+          <span class="arrow">▶</span>
+        </div>
+        <ul class="sub-menu" id="sub-bizMgmt">
+          <li onclick="switchPage('appointment')">进站预约单</li>
+          <li onclick="showOrderDialog()">确认订单</li>
+        </ul>
+      </div>
+
+      <!-- 收入结算管理 -->
+      <div class="menu-section">
+        <div class="menu-item" onclick="toggleMenu('income')">
+          <span>收入结算管理</span>
+          <span class="arrow">▶</span>
+        </div>
+        <ul class="sub-menu" id="sub-income">
+          <li onclick="switchPage('bankDetail')">银行交易明细</li>
+        </ul>
+      </div>
+
+      <!-- 基础数据 -->
+      <div class="menu-section">
+        <div class="menu-item" onclick="toggleMenu('baseData')">
+          <span>基础数据</span>
+          <span class="arrow">▶</span>
+        </div>
+        <ul class="sub-menu" id="sub-baseData">
+          <li onclick="switchPage('gateConfig')">闸口放行配置</li>
+        </ul>
+      </div>
+
+      <!-- 车队与车辆管理 -->
+      <div class="menu-section">
+        <div class="menu-item" onclick="toggleMenu('fleet')">
+          <span>车队与车辆管理</span>
+          <span class="arrow">▶</span>
+        </div>
+        <ul class="sub-menu" id="sub-fleet">
+          <li onclick="switchPage('vehicleOperation')">车辆作业</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <!-- Nav Tabs Bar -->
+      <div class="nav-tabs-bar">
+        <div class="nav-tab active" data-page="sealRecord" onclick="switchPage('sealRecord')"><span>印章使用记录</span><span class="tab-close" onclick="event.stopPropagation();closePage('sealRecord')">x</span></div>
+        <div class="nav-tab" data-page="appointment" onclick="switchPage('appointment')"><span>进站预约单</span><span class="tab-close" onclick="event.stopPropagation();closePage('appointment')">x</span></div>
+        <div class="nav-tab" data-page="bankDetail" onclick="switchPage('bankDetail')"><span>银行交易明细</span><span class="tab-close" onclick="event.stopPropagation();closePage('bankDetail')">x</span></div>
+        <div class="nav-tab" data-page="gateConfig" onclick="switchPage('gateConfig')"><span>闸口放行配置</span><span class="tab-close" onclick="event.stopPropagation();closePage('gateConfig')">x</span></div>
+        <div class="nav-tab" data-page="vehicleOperation" onclick="switchPage('vehicleOperation')"><span>车辆作业</span><span class="tab-close" onclick="event.stopPropagation();closePage('vehicleOperation')">x</span></div>
+      </div>
+
+      <!-- Page Wrapper -->
+      <div class="page-wrapper">
+
+        <!-- ==================== Page 1: 印章使用记录 ==================== -->
+        <div class="page-content active" id="page-sealRecord">
+          <div class="content-body">
+            <!-- Filter -->
+            <div class="filter-section">
+              <div class="filter-header">
+                <span>筛选条件</span>
+              </div>
+              <div class="filter-body">
+                <div class="filter-item">
+                  <label>印章名称</label>
+                  <select>
+                    <option>全部</option>
+                    <option>合同章</option>
+                    <option>业务专用章</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label>关联业务编号</label>
+                  <input type="text" placeholder="请输入关联业务编号">
+                </div>
+                <div class="filter-item">
+                  <label>关联业务</label>
+                  <select>
+                    <option>全部</option>
+                    <option>合同签约</option>
+                    <option>电子委托书</option>
+                    <option>收入账单</option>
+                    <option>成本账单</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label>使用人</label>
+                  <input type="text" placeholder="请输入使用人">
+                </div>
+                <div class="filter-item">
+                  <label>使用日期</label>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <input type="date" style="flex:1;">
+                    <span style="color:#999;font-size:13px;">至</span>
+                    <input type="date" style="flex:1;">
+                  </div>
+                </div>
+                <div class="filter-buttons">
+                  <button class="btn btn-primary">查询</button>
+                  <button class="btn">重置</button>
+                  <button class="btn btn-outline" onclick="toggleDrawer('sealRecord')">高级筛选</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-section">
+              <div class="table-header-bar">
+                <span class="title">数据列表</span>
+                <button class="btn btn-outline">批量导出</button>
+              </div>
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th><input type="checkbox" class="checkbox"></th>
+                      <th>使用记录编号</th>
+                      <th>印章名称</th>
+                      <th>关联业务编号</th>
+                      <th>关联业务</th>
+                      <th>相对方类型</th>
+                      <th>企业名称</th>
+                      <th>业务文件</th>
+                      <th>申请人</th>
+                      <th>使用时间</th>
+                      <th>审核人</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>YYJL2026070100001</td>
+                      <td>合同章</td>
+                      <td><span class="link">HT202606010001</span></td>
+                      <td>合同签约</td>
+                      <td>客户</td>
+                      <td>深圳大洋</td>
+                      <td><button class="btn btn-link">查看</button></td>
+                      <td>张三</td>
+                      <td>2026-07-01 09:30</td>
+                      <td>王主管</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>YYJL2026062800002</td>
+                      <td>业务专用章</td>
+                      <td><span class="link">YWWT202606150002</span></td>
+                      <td>电子委托书</td>
+                      <td>供应商</td>
+                      <td>长春丰泰</td>
+                      <td><button class="btn btn-link">查看</button></td>
+                      <td>李四</td>
+                      <td>2026-06-28 14:30</td>
+                      <td>王主管</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>YYJL2026062500003</td>
+                      <td>业务专用章</td>
+                      <td><span class="link">BJD202606200003</span></td>
+                      <td>收入账单</td>
+                      <td>客户</td>
+                      <td>深圳大洋</td>
+                      <td><button class="btn btn-link">查看</button></td>
+                      <td>赵六</td>
+                      <td>2026-06-25 10:15</td>
+                      <td>李经理</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>YYJL2026062200004</td>
+                      <td>合同章</td>
+                      <td><span class="link">HT202606100004</span></td>
+                      <td>合同签约</td>
+                      <td>供应商</td>
+                      <td>长春丰泰</td>
+                      <td><button class="btn btn-link">查看</button></td>
+                      <td>孙七</td>
+                      <td>2026-06-22 16:45</td>
+                      <td>王主管</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>YYJL2026062000005</td>
+                      <td>业务专用章</td>
+                      <td><span class="link">YWDZ202606180005</span></td>
+                      <td>成本账单</td>
+                      <td>客户</td>
+                      <td>深圳大洋</td>
+                      <td><button class="btn btn-link">查看</button></td>
+                      <td>周八</td>
+                      <td>2026-06-20 09:00</td>
+                      <td>李经理</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>YYJL2026061800006</td>
+                      <td>业务专用章</td>
+                      <td><span class="link">YWJS202606050006</span></td>
+                      <td>成本账单</td>
+                      <td>供应商</td>
+                      <td>长春丰泰</td>
+                      <td><button class="btn btn-link">查看</button></td>
+                      <td>张三</td>
+                      <td>2026-06-18 11:20</td>
+                      <td>李经理</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Pagination -->
+              <div class="pagination-bar">
+                <span class="pagination-info">共 6 条</span>
+                <div class="pagination-list">
+                  <span class="page-btn disabled">&lt;</span>
+                  <span class="page-btn active">1</span>
+                  <span class="page-btn disabled">&gt;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== Page 2: 进站预约单 ==================== -->
+        <div class="page-content" id="page-appointment">
+          <div class="content-body">
+            <!-- Filter -->
+            <div class="filter-section">
+              <div class="filter-header">
+                <span>筛选条件</span>
+              </div>
+              <div class="filter-body">
+                <div class="filter-item">
+                  <label>预约单号</label>
+                  <input type="text" placeholder="请输入预约单号">
+                </div>
+                <div class="filter-item">
+                  <label>关联订单号</label>
+                  <input type="text" placeholder="请输入关联订单号">
+                </div>
+                <div class="filter-item">
+                  <label>关联堆场</label>
+                  <select>
+                    <option>全部</option>
+                    <option>西安中心站</option>
+                    <option>西安远海国铁物流堆场</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label>预约类型</label>
+                  <select>
+                    <option>全部</option>
+                    <option>提空</option>
+                    <option>提重</option>
+                    <option>落重</option>
+                    <option>还空</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label>集卡车车牌号</label>
+                  <input type="text" placeholder="请输入车牌号">
+                </div>
+                <div class="filter-item">
+                  <label>司机姓名</label>
+                  <input type="text" placeholder="请输入司机姓名">
+                </div>
+                <div class="filter-item">
+                  <label>预约状态</label>
+                  <select>
+                    <option>全部</option>
+                    <option>待审核</option>
+                    <option>已通过</option>
+                    <option>已拒绝</option>
+                    <option>已取消</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label>通行状态</label>
+                  <select>
+                    <option>全部</option>
+                    <option>待进站</option>
+                    <option>已进站</option>
+                    <option>已出站</option>
+                  </select>
+                </div>
+                <div class="filter-buttons">
+                  <button class="btn btn-primary">查询</button>
+                  <button class="btn">重置</button>
+                  <button class="btn btn-outline" onclick="toggleDrawer('appointment')">高级筛选</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-section">
+              <div class="table-header-bar">
+                <span class="title">数据列表</span>
+                <button class="btn btn-primary btn-sm" onclick="toggleModal('appointmentAdd')">+ 新增</button>
+              </div>
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>预约单号</th>
+                      <th>关联订单号</th>
+                      <th>预约类型</th>
+                      <th>预约进站时间</th>
+                      <th>集卡车车牌号</th>
+                      <th>司机姓名</th>
+                      <th>手机号码</th>
+                      <th>进站集装箱号</th>
+                      <th>出站集装箱号</th>
+                      <th>实际进站时间</th>
+                      <th>实际出站时间</th>
+                      <th>预约单来源</th>
+                      <th>供应商</th>
+                      <th>堆场</th>
+                      <th>预约状态</th>
+                      <th>通行状态</th>
+                      <th>拒绝原因</th>
+                      <th style="position:sticky;right:0;background:#f5f5f5;">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>YYDH2026061700001</td>
+                      <td><span class="link">ZTLJXABD260601001</span></td>
+                      <td>提空</td>
+                      <td>2026-06-01 08:00</td>
+                      <td>京A12345</td>
+                      <td>张三</td>
+                      <td>13800138001</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>集装箱订单</td>
+                      <td>中铁联集西安分公司</td>
+                      <td>西安中心站</td>
+                      <td><span class="tag tag-orange">待审核</span></td>
+                      <td><span class="tag tag-gray">待进站</span></td>
+                      <td>—</td>
+                      <td style="position:sticky;right:0;background:#fff;"><button class="btn btn-link" onclick="toggleModal('appointmentAudit')">审核</button><button class="btn btn-link danger" onclick="toggleModal('appointmentCancel')">取消</button></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>YYDH2026061700002</td>
+                      <td><span class="link">ZTLJXABD260601002</span></td>
+                      <td>提重</td>
+                      <td>2026-06-01 10:00</td>
+                      <td>京B67890</td>
+                      <td>李四</td>
+                      <td>13800138002</td>
+                      <td>—</td>
+                      <td>OOLU3456789</td>
+                      <td>2026-06-01 08:30</td>
+                      <td>2026-06-01 11:00</td>
+                      <td>集装箱订单</td>
+                      <td>中铁联集青岛分公司</td>
+                      <td>西安远海国铁物流堆场</td>
+                      <td><span class="tag tag-green">已通过</span></td>
+                      <td><span class="tag tag-green">已出站</span></td>
+                      <td>—</td>
+                      <td style="position:sticky;right:0;background:#fff;"><button class="btn btn-link" onclick="toggleModal('appointmentView')">查看</button></td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>YYDH2026061700003</td>
+                      <td>—</td>
+                      <td>落重</td>
+                      <td>2026-06-01 14:00</td>
+                      <td>京C11111</td>
+                      <td>王五</td>
+                      <td>13800138003</td>
+                      <td>OOLU3456789</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>手动新增</td>
+                      <td>长春丰泰物流有限公司</td>
+                      <td>西安中心站</td>
+                      <td><span class="tag tag-red">已拒绝</span></td>
+                      <td><span class="tag tag-gray">待进站</span></td>
+                      <td>集卡车信息与预约信息不符</td>
+                      <td style="position:sticky;right:0;background:#fff;"><button class="btn btn-link" onclick="toggleModal('appointmentEditRejected')">编辑</button></td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>YYDH2026061700004</td>
+                      <td><span class="link">ZTLJXABD260601004</span></td>
+                      <td>还空</td>
+                      <td>2026-06-02 09:00</td>
+                      <td>京D22222</td>
+                      <td>赵六</td>
+                      <td>13800138004</td>
+                      <td>CSLU4567890</td>
+                      <td>CSLU4567890</td>
+                      <td>2026-06-02 08:50</td>
+                      <td>—</td>
+                      <td>集装箱订单</td>
+                      <td>中铁联集西安分公司</td>
+                      <td>西安远海国铁物流堆场</td>
+                      <td><span class="tag tag-green">已通过</span></td>
+                      <td><span class="tag tag-orange">已进站</span></td>
+                      <td>—</td>
+                      <td style="position:sticky;right:0;background:#fff;"><button class="btn btn-link" onclick="toggleModal('appointmentView')">查看</button></td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>YYDH2026061700005</td>
+                      <td>—</td>
+                      <td>提空</td>
+                      <td>2026-06-02 11:00</td>
+                      <td>京E33333</td>
+                      <td>孙七</td>
+                      <td>13800138005</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>手动新增</td>
+                      <td>中铁联集青岛分公司</td>
+                      <td>西安中心站</td>
+                      <td><span class="tag tag-gray">已取消</span></td>
+                      <td><span class="tag tag-gray">待进站</span></td>
+                      <td>—</td>
+                      <td style="position:sticky;right:0;background:#fff;"><button class="btn btn-link" onclick="toggleModal('appointmentEdit')">编辑</button></td>
+                    </tr>
+                    <tr>
+                      <td>6</td>
+                      <td>YYDH2026061700006</td>
+                      <td>—</td>
+                      <td>提重</td>
+                      <td>2026-06-03 09:30</td>
+                      <td>京F44444</td>
+                      <td>周八</td>
+                      <td>13800138006</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>手动新增</td>
+                      <td>中铁联集西安分公司</td>
+                      <td>西安远海国铁物流堆场</td>
+                      <td><span class="tag tag-gray">草稿</span></td>
+                      <td><span class="tag tag-gray">待进站</span></td>
+                      <td>—</td>
+                      <td style="position:sticky;right:0;background:#fff;"><button class="btn btn-link" onclick="toggleModal('appointmentEdit')">编辑</button><button class="btn btn-link danger" onclick="toggleModal('appointmentCancel')">取消</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Pagination -->
+              <div class="pagination-bar">
+                <span class="pagination-info">共 5 条</span>
+                <div class="pagination-list">
+                  <span class="page-btn disabled">&lt;</span>
+                  <span class="page-btn active">1</span>
+                  <span class="page-btn disabled">&gt;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== Page 3: 银行交易明细 ==================== -->
+        <div class="page-content" id="page-bankDetail">
+          <div class="content-body">
+            <!-- Filter -->
+            <div class="filter-section">
+              <div class="filter-header">
+                <span>筛选条件</span>
+              </div>
+              <div class="filter-body">
+                <div class="filter-item">
+                  <label>交易明细编号</label>
+                  <input type="text" placeholder="请输入交易明细编号">
+                </div>
+                <div class="filter-item">
+                  <label>对手信息</label>
+                  <input type="text" placeholder="请输入对手信息">
+                </div>
+                <div class="filter-item">
+                  <label>银行账号</label>
+                  <input type="text" placeholder="请输入银行账号">
+                </div>
+                <div class="filter-item">
+                  <label>资金组织</label>
+                  <select>
+                    <option>全部</option>
+                    <option>中铁联集西安分公司</option>
+                    <option>中铁联集总部</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label>交易日期</label>
+                  <input type="date">
+                </div>
+                <div class="filter-item">
+                  <label>是否入账</label>
+                  <select>
+                    <option>全部</option>
+                    <option>未入账</option>
+                    <option>已入账</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label>是否付款</label>
+                  <select>
+                    <option>全部</option>
+                    <option>未付款</option>
+                    <option>已付款</option>
+                  </select>
+                </div>
+                <div class="filter-buttons">
+                  <button class="btn btn-primary">查询</button>
+                  <button class="btn">重置</button>
+                  <button class="btn btn-outline" onclick="toggleDrawer('bankDetail')">高级筛选</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-section">
+              <div class="table-header-bar">
+                <span class="title">数据列表</span>
+                <button class="btn btn-primary btn-sm" onclick="toggleModal('batchEntry')">批量入账</button>
+              </div>
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width:40px;"><input type="checkbox" class="checkbox"></th>
+                      <th>交易明细编号</th>
+                      <th>对手信息</th>
+                      <th>银行账号</th>
+                      <th>资金组织</th>
+                      <th>开始日期</th>
+                      <th>结束日期</th>
+                      <th>交易金额</th>
+                      <th>已入账金额</th>
+                      <th>是否入账</th>
+                      <th>是否付款</th>
+                      <th>付款日期</th>
+                      <th>创建日期</th>
+                      <th>修改日期</th>
+                      <th style="position:sticky;right:0;background:linear-gradient(180deg, #f8faff 0%, #f0f5ff 100%);z-index:2;">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>JYMX2026070100001</td>
+                      <td>深圳大洋物流有限公司</td>
+                      <td>6222 0206 0120 3456 789</td>
+                      <td>中铁联集西安分公司</td>
+                      <td>2026-07-01</td>
+                      <td>2026-07-01</td>
+                      <td class="amount">125,000.00</td>
+                      <td class="amount">125,000.00</td>
+                      <td><span class="tag tag-green">已入账</span></td>
+                      <td><span class="tag tag-green">已付款</span></td>
+                      <td>2026-07-01</td>
+                      <td>2026-07-01 09:00</td>
+                      <td>2026-07-01 15:30</td>
+                      <td style="position:sticky;right:0;background:#fff;z-index:1;"><button class="btn btn-link" onclick="toggleViewDrawer('bankView')">查看</button></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>JYMX2026063000002</td>
+                      <td>长春丰泰供应链有限公司</td>
+                      <td>6222 0206 0120 9876 543</td>
+                      <td>中铁联集西安分公司</td>
+                      <td>2026-06-28</td>
+                      <td>2026-06-30</td>
+                      <td class="amount">88,500.00</td>
+                      <td class="amount">0.00</td>
+                      <td><span class="tag tag-red">未入账</span></td>
+                      <td><span class="tag tag-red">未付款</span></td>
+                      <td>—</td>
+                      <td>2026-06-30 10:15</td>
+                      <td>2026-06-30 10:15</td>
+                      <td style="position:sticky;right:0;background:#fff;z-index:1;"><button class="btn btn-link" onclick="toggleViewDrawer('bankView')">查看</button><button class="btn btn-link" onclick="toggleModal('accountEntry')">入账</button></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>JYMX2026062800003</td>
+                      <td>上海远东国际货运代理</td>
+                      <td>6222 0206 0120 1122 334</td>
+                      <td>中铁联集总部</td>
+                      <td>2026-06-25</td>
+                      <td>2026-06-28</td>
+                      <td class="amount">256,800.00</td>
+                      <td class="amount">200,000.00</td>
+                      <td><span class="tag tag-red">未入账</span></td>
+                      <td><span class="tag tag-green">已付款</span></td>
+                      <td>2026-06-28</td>
+                      <td>2026-06-28 08:45</td>
+                      <td>2026-06-29 11:00</td>
+                      <td style="position:sticky;right:0;background:#fff;z-index:1;"><button class="btn btn-link" onclick="toggleViewDrawer('bankView')">查看</button><button class="btn btn-link" onclick="toggleModal('accountEntry')">入账</button></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>JYMX2026062500004</td>
+                      <td>深圳大洋物流有限公司</td>
+                      <td>6222 0206 0120 3456 789</td>
+                      <td>中铁联集西安分公司</td>
+                      <td>2026-06-22</td>
+                      <td>2026-06-25</td>
+                      <td class="amount">67,200.00</td>
+                      <td class="amount">0.00</td>
+                      <td><span class="tag tag-red">未入账</span></td>
+                      <td><span class="tag tag-red">未付款</span></td>
+                      <td>—</td>
+                      <td>2026-06-25 14:20</td>
+                      <td>2026-06-26 09:30</td>
+                      <td style="position:sticky;right:0;background:#fff;z-index:1;"><button class="btn btn-link" onclick="toggleViewDrawer('bankView')">查看</button><button class="btn btn-link" onclick="toggleModal('accountEntry')">入账</button></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>JYMX2026062200005</td>
+                      <td>天津港物流集团</td>
+                      <td>6222 0206 0120 5566 778</td>
+                      <td>中铁联集总部</td>
+                      <td>2026-06-20</td>
+                      <td>2026-06-22</td>
+                      <td class="amount">340,000.00</td>
+                      <td class="amount">0.00</td>
+                      <td><span class="tag tag-red">未入账</span></td>
+                      <td><span class="tag tag-red">未付款</span></td>
+                      <td>—</td>
+                      <td>2026-06-22 16:50</td>
+                      <td>2026-06-22 16:50</td>
+                      <td style="position:sticky;right:0;background:#fff;z-index:1;"><button class="btn btn-link" onclick="toggleViewDrawer('bankView')">查看</button><button class="btn btn-link" onclick="toggleModal('accountEntry')">入账</button></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox"></td>
+                      <td>JYMX2026062000006</td>
+                      <td>长春丰泰供应链有限公司</td>
+                      <td>6222 0206 0120 9876 543</td>
+                      <td>中铁联集西安分公司</td>
+                      <td>2026-06-18</td>
+                      <td>2026-06-20</td>
+                      <td class="amount">156,300.00</td>
+                      <td class="amount">156,300.00</td>
+                      <td><span class="tag tag-green">已入账</span></td>
+                      <td><span class="tag tag-green">已付款</span></td>
+                      <td>2026-06-20</td>
+                      <td>2026-06-20 11:30</td>
+                      <td>2026-06-21 08:00</td>
+                      <td style="position:sticky;right:0;background:#fff;z-index:1;"><button class="btn btn-link" onclick="toggleViewDrawer('bankView')">查看</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Pagination -->
+              <div class="pagination-bar">
+                <span class="pagination-info">共 6 条</span>
+                <div class="pagination-list">
+                  <span class="page-btn disabled">&lt;</span>
+                  <span class="page-btn active">1</span>
+                  <span class="page-btn disabled">&gt;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== Page 4: 闸口放行配置 ==================== -->
+        <div class="page-content" id="page-gateConfig">
+          <div class="content-body">
+            <!-- Yard Tabs -->
+            <div class="yard-tabs-bar">
+              <div class="yard-tab active" id="yard-1" onclick="switchYardTab(1)">西安中心站堆场</div>
+              <div class="yard-tab" id="yard-2" onclick="switchYardTab(2)">西安远海国际物流堆场</div>
+            </div>
+
+            <!-- Filter -->
+            <div class="filter-section">
+              <div class="filter-header">
+                <span>筛选条件</span>
+              </div>
+              <div class="filter-body">
+                <div class="filter-item">
+                  <label>预约类型</label>
+                  <select>
+                    <option>全部</option>
+                    <option>提空</option>
+                    <option>提重</option>
+                    <option>落重</option>
+                    <option>还空</option>
+                  </select>
+                </div>
+                <div class="filter-buttons">
+                  <button class="btn btn-primary">查询</button>
+                  <button class="btn">重置</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-section">
+              <div class="table-header-bar">
+                <span class="title">数据列表</span>
+                <button class="btn btn-primary btn-sm" onclick="toggleModal('gateAdd')">+ 新增</button>
+              </div>
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>预约类型</th>
+                      <th>进站放行校验字段</th>
+                      <th>出站放行校验字段</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>提空</td>
+                      <td>集卡车车牌号</td>
+                      <td>集卡车车牌号</td>
+                      <td><span class="tag tag-green">启用</span></td>
+                      <td><button class="btn btn-link">编辑</button><button class="btn btn-link">禁用</button></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>提重</td>
+                      <td>集卡车车牌号、集装箱号</td>
+                      <td>集卡车车牌号、集装箱号</td>
+                      <td><span class="tag tag-green">启用</span></td>
+                      <td><button class="btn btn-link">编辑</button><button class="btn btn-link">禁用</button></td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>落重</td>
+                      <td>集卡车车牌号、集装箱号、车挂号</td>
+                      <td>集卡车车牌号、集装箱号、车挂号</td>
+                      <td><span class="tag tag-green">启用</span></td>
+                      <td><button class="btn btn-link">编辑</button><button class="btn btn-link">禁用</button></td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>还空</td>
+                      <td>集装箱号</td>
+                      <td>集装箱号</td>
+                      <td><span class="tag tag-green">启用</span></td>
+                      <td><button class="btn btn-link">编辑</button><button class="btn btn-link">禁用</button></td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>提空</td>
+                      <td>车挂号</td>
+                      <td>车挂号</td>
+                      <td><span class="tag tag-gray">禁用</span></td>
+                      <td><button class="btn btn-link">编辑</button><button class="btn btn-link">启用</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Pagination -->
+              <div class="pagination-bar">
+                <span class="pagination-info">共 5 条</span>
+                <div class="pagination-list">
+                  <span class="page-btn disabled">&lt;</span>
+                  <span class="page-btn active">1</span>
+                  <span class="page-btn disabled">&gt;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== Page 5: 车辆作业 ==================== -->
+        <div class="page-content" id="page-vehicleOperation">
+          <div class="content-body">
+            <!-- Filter -->
+            <div class="filter-section">
+              <div class="filter-header">
+                <span>筛选条件</span>
+              </div>
+              <div class="filter-body">
+                <div class="filter-item">
+                  <label>订单号</label>
+                  <input type="text" placeholder="请输入订单号">
+                </div>
+                <div class="filter-item">
+                  <label>作业类型</label>
+                  <select>
+                    <option>全部</option>
+                    <option>提箱</option>
+                    <option>还空</option>
+                    <option>装箱</option>
+                    <option>卸货</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label>车牌号</label>
+                  <input type="text" placeholder="请输入车牌号">
+                </div>
+                <div class="filter-item">
+                  <label>司机</label>
+                  <input type="text" placeholder="请输入司机姓名">
+                </div>
+                <div class="filter-item">
+                  <label>堆场</label>
+                  <select>
+                    <option>全部</option>
+                    <option>西安中心站</option>
+                    <option>西安远海国铁物流堆场</option>
+                  </select>
+                </div>
+                <div class="filter-buttons">
+                  <button class="btn btn-primary">查询</button>
+                  <button class="btn">重置</button>
+                  <button class="btn btn-outline" onclick="toggleDrawer('vehicleOp')">高级筛选</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-section">
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>订单号</th>
+                      <th>作业类型</th>
+                      <th>车牌号</th>
+                      <th>司机</th>
+                      <th>司机手机号码</th>
+                      <th>所属公司</th>
+                      <th>堆场</th>
+                      <th>集装箱号</th>
+                      <th>提箱/提重地</th>
+                      <th>装箱/卸货地</th>
+                      <th>提箱/提空预约状态</th>
+                      <th>还空/落重预约状态</th>
+                      <th>进站时间</th>
+                      <th>出站时间</th>
+                      <th>订单状态</th>
+                      <th>预约时间</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>ZTLJXABD260604010</td>
+                      <td>提箱</td>
+                      <td>京A·88888</td>
+                      <td>张伟</td>
+                      <td>138****0001</td>
+                      <td>北京中铁物流</td>
+                      <td>西安中心站</td>
+                      <td>MSKU9876543</td>
+                      <td>北京站-堆场A</td>
+                      <td>天津站-堆场B</td>
+                      <td><span class="tag tag-orange">待预约</span></td>
+                      <td><span class="tag tag-green">已预约</span></td>
+                      <td>2026-06-15 08:30</td>
+                      <td>—</td>
+                      <td><span class="tag tag-green">处理中</span></td>
+                      <td>2026-06-14 18:00</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>ZTLJXABD260603032</td>
+                      <td>还空</td>
+                      <td>京B·12345</td>
+                      <td>李强</td>
+                      <td>139****0002</td>
+                      <td>天津港物流</td>
+                      <td>西安远海国铁物流堆场</td>
+                      <td>CCLU4567890</td>
+                      <td>天津站-堆场C</td>
+                      <td>北京站-堆场A</td>
+                      <td><span class="tag tag-green">已预约</span></td>
+                      <td><span class="tag tag-orange">待预约</span></td>
+                      <td>2026-06-14 14:20</td>
+                      <td>2026-06-14 16:45</td>
+                      <td><span class="tag tag-blue">已完成</span></td>
+                      <td>2026-06-13 16:30</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>ZTLJXABD260603018</td>
+                      <td>装箱</td>
+                      <td>京C·56789</td>
+                      <td>王芳</td>
+                      <td>137****0003</td>
+                      <td>石家庄联运</td>
+                      <td>西安中心站</td>
+                      <td>TGHU1234567</td>
+                      <td>石家庄站-堆场D</td>
+                      <td>郑州站-堆场E</td>
+                      <td><span class="tag tag-green">已预约</span></td>
+                      <td><span class="tag tag-green">已预约</span></td>
+                      <td>2026-06-14 09:10</td>
+                      <td>2026-06-14 11:30</td>
+                      <td><span class="tag tag-blue">已完成</span></td>
+                      <td>2026-06-13 14:00</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>ZTLJXABD260602055</td>
+                      <td>卸货</td>
+                      <td>京D·34567</td>
+                      <td>赵明</td>
+                      <td>136****0004</td>
+                      <td>唐山物流中心</td>
+                      <td>西安远海国铁物流堆场</td>
+                      <td>MSCU8765432</td>
+                      <td>唐山站-堆场F</td>
+                      <td>天津站-堆场G</td>
+                      <td><span class="tag tag-red">已取消</span></td>
+                      <td><span class="tag tag-red">已取消</span></td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td><span class="tag tag-red">已取消</span></td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>ZTLJXABD260602022</td>
+                      <td>提箱</td>
+                      <td>京E·90123</td>
+                      <td>刘洋</td>
+                      <td>135****0005</td>
+                      <td>保定货运公司</td>
+                      <td>西安中心站</td>
+                      <td>CMAU3456789</td>
+                      <td>保定站-堆场H</td>
+                      <td>北京站-堆场A</td>
+                      <td><span class="tag tag-green">已预约</span></td>
+                      <td><span class="tag tag-orange">待预约</span></td>
+                      <td>2026-06-13 10:00</td>
+                      <td>2026-06-13 12:15</td>
+                      <td><span class="tag tag-green">处理中</span></td>
+                      <td>2026-06-12 20:00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Pagination -->
+              <div class="pagination-bar">
+                <span class="pagination-info">共 128 条</span>
+                <select class="page-size-select">
+                  <option>20条/页</option>
+                </select>
+                <div class="pagination-list">
+                  <span class="page-btn disabled">&lt;</span>
+                  <span class="page-btn active">1</span>
+                  <span class="page-btn">2</span>
+                  <span class="page-btn">3</span>
+                  <span class="page-btn">4</span>
+                  <span class="page-btn">5</span>
+                  <span class="page-btn" style="cursor:default;border:none;">...</span>
+                  <span class="page-btn">26</span>
+                  <span class="page-btn">&gt;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end page-wrapper -->
+    </div><!-- end content-area -->
+  </div><!-- end main-layout -->
+
+  <!-- Footer -->
+  <div class="page-footer">原型图 · 中铁联集经营管理平台西安分公司</div>
+</div><!-- end page-container -->
+
+<!-- ==================== Modal: 确认订单 ==================== -->
+<div class="modal-overlay" id="orderDialogModal">
+  <div class="modal-dialog">
+    <div class="modal-title">
+      <span>确认订单</span>
+      <span class="modal-close" onclick="closeOrderDialog()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <!-- Product Cards -->
+      <div class="product-cards">
+        <!-- Product A -->
+        <div class="product-card">
+          <div class="product-card-header">
+            产品A <span class="product-type-tag">单供应商</span>
+          </div>
+          <div class="product-card-body">
+            <table class="supplier-table">
+              <thead>
+                <tr>
+                  <th>供应商</th>
+                  <th>单价</th>
+                  <th>数量</th>
+                  <th class="amount">小计</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>供应商甲</td>
+                  <td class="amount">¥100.00</td>
+                  <td style="text-align:center;">10</td>
+                  <td class="amount">¥1,000.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Product B -->
+        <div class="product-card">
+          <div class="product-card-header">
+            产品B <span class="product-type-tag">多供应商</span>
+          </div>
+          <div class="product-card-body">
+            <table class="supplier-table">
+              <thead>
+                <tr>
+                  <th>供应商</th>
+                  <th>单价</th>
+                  <th>数量</th>
+                  <th class="amount">小计</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>供应商乙</td>
+                  <td class="amount">¥80.00</td>
+                  <td style="text-align:center;">10</td>
+                  <td class="amount">¥800.00</td>
+                </tr>
+                <tr>
+                  <td>供应商丙</td>
+                  <td class="amount">¥90.00</td>
+                  <td style="text-align:center;">5</td>
+                  <td class="amount">¥450.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Product C -->
+        <div class="product-card">
+          <div class="product-card-header">
+            产品C <span class="product-type-tag">单供应商</span>
+          </div>
+          <div class="product-card-body">
+            <table class="supplier-table">
+              <thead>
+                <tr>
+                  <th>供应商</th>
+                  <th>单价</th>
+                  <th>数量</th>
+                  <th class="amount">小计</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>供应商丁</td>
+                  <td class="amount">¥200.00</td>
+                  <td style="text-align:center;">3</td>
+                  <td class="amount">¥600.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="summary-section">
+        <div class="summary-row">
+          <span class="summary-label">订单售出总额</span>
+          <span class="summary-value blue">¥5,000.00</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">订单总成本费用</span>
+          <span class="summary-value red">¥2,850.00</span>
+        </div>
+      </div>
+
+      <!-- Warning -->
+      <div class="modal-warning">
+        <span class="warning-icon">!</span>
+        <span>总成本费用大于售出费用，继续提交请点击确定，需要修改成本请点击取消</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn">取消</button>
+      <button class="btn btn-primary">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Drawer: 车辆作业 高级筛选 ==================== -->
+<div class="drawer-overlay" id="drawer-vehicleOp"></div>
+<div class="drawer-panel" id="drawerPanel-vehicleOp">
+  <div class="drawer-header">
+    <span>高级筛选</span>
+    <span class="drawer-close" onclick="toggleDrawer('vehicleOp')">&times;</span>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-form-group"><label>订单号</label><input type="text" placeholder="请输入订单号"></div>
+    <div class="drawer-form-group"><label>作业类型</label><select><option>全部</option><option>提箱</option><option>还空</option><option>装箱</option><option>卸货</option></select></div>
+    <div class="drawer-form-group"><label>车牌号</label><input type="text" placeholder="请输入车牌号"></div>
+    <div class="drawer-form-group"><label>司机</label><input type="text" placeholder="请输入司机姓名"></div>
+    <div class="drawer-form-group"><label>司机手机号码</label><input type="text" placeholder="请输入手机号码"></div>
+    <div class="drawer-form-group"><label>所属公司</label><input type="text" placeholder="请输入公司名称"></div>
+    <div class="drawer-form-group"><label>堆场</label><select><option>全部</option><option>西安中心站</option><option>西安远海国铁物流堆场</option></select></div>
+    <div class="drawer-form-group"><label>集装箱号</label><input type="text" placeholder="请输入集装箱号"></div>
+    <div class="drawer-form-group"><label>提箱/提重地</label><input type="text" placeholder="请输入提箱/提重地"></div>
+    <div class="drawer-form-group"><label>装箱/卸货地</label><input type="text" placeholder="请输入装箱/卸货地"></div>
+    <div class="drawer-form-group"><label>提箱/提空预约状态</label><select><option>全部</option><option>待预约</option><option>已预约</option><option>已取消</option></select></div>
+    <div class="drawer-form-group"><label>还空/落重预约状态</label><select><option>全部</option><option>待预约</option><option>已预约</option><option>已取消</option></select></div>
+    <div class="drawer-form-group"><label>进站时间</label><input type="text" placeholder="请选择进站时间"></div>
+    <div class="drawer-form-group"><label>出站时间</label><input type="text" placeholder="请选择出站时间"></div>
+    <div class="drawer-form-group"><label>订单状态</label><select><option>全部</option><option>处理中</option><option>已完成</option><option>已取消</option></select></div>
+    <div class="drawer-form-group"><label>预约时间</label><input type="text" placeholder="请选择预约时间"></div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn" onclick="toggleDrawer('vehicleOp')">重置</button>
+    <button class="btn btn-primary" onclick="toggleDrawer('vehicleOp')">查询</button>
+  </div>
+</div>
+
+<!-- ==================== Drawer: 银行交易明细 高级筛选 ==================== -->
+<div class="drawer-overlay" id="drawer-bankDetail"></div>
+<div class="drawer-panel" id="drawerPanel-bankDetail">
+  <div class="drawer-header">
+    <span>高级筛选</span>
+    <span class="drawer-close" onclick="toggleDrawer('bankDetail')">&times;</span>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-form-group"><label>交易明细编号</label><input type="text" placeholder="请输入交易明细编号"></div>
+    <div class="drawer-form-group"><label>对手信息</label><input type="text" placeholder="请输入对手信息"></div>
+    <div class="drawer-form-group"><label>银行账号</label><input type="text" placeholder="请输入银行账号"></div>
+    <div class="drawer-form-group"><label>资金组织</label><select><option>全部</option><option>中铁联集西安分公司</option><option>中铁联集总部</option></select></div>
+    <div class="drawer-form-group"><label>交易日期</label><input type="text" placeholder="请选择日期范围"></div>
+    <div class="drawer-form-group"><label>是否入账</label><select><option>全部</option><option>未入账</option><option>已入账</option></select></div>
+    <div class="drawer-form-group"><label>是否付款</label><select><option>全部</option><option>未付款</option><option>已付款</option></select></div>
+    <div class="drawer-form-group"><label>付款日期</label><input type="text" placeholder="请选择付款日期范围"></div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn" onclick="toggleDrawer('bankDetail')">取消</button>
+    <button class="btn btn-primary" onclick="toggleDrawer('bankDetail')">确定</button>
+  </div>
+</div>
+
+<!-- ==================== Drawer: 银行交易明细 查看详情 ==================== -->
+<div class="drawer-overlay" id="drawerOverlay-bankView"></div>
+<div class="drawer-panel" id="drawerPanel-bankView">
+  <div class="drawer-header">
+    <span>银行交易明细详情</span>
+    <span class="drawer-close" onclick="toggleDrawer('bankView')">&times;</span>
+  </div>
+  <div class="drawer-body" style="padding:0;">
+    <div class="detail-section">
+      <div class="detail-section-title">基础信息</div>
+      <div class="detail-form-grid">
+        <div class="detail-form-item"><label>交易明细编号</label><div class="value">JYMX2026063000002</div></div>
+        <div class="detail-form-item"><label>对手信息</label><div class="value">长春丰泰供应链有限公司</div></div>
+        <div class="detail-form-item"><label>银行账号</label><div class="value">6222 0206 0120 9876 543</div></div>
+        <div class="detail-form-item"><label>资金组织</label><div class="value">中铁联集西安分公司</div></div>
+        <div class="detail-form-item"><label>开始日期</label><div class="value">2026-06-28</div></div>
+        <div class="detail-form-item"><label>结束日期</label><div class="value">2026-06-30</div></div>
+      </div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">金额信息</div>
+      <div class="detail-form-grid">
+        <div class="detail-form-item"><label>交易金额</label><div class="value" style="justify-content:flex-end;font-family:Consolas,Monaco,monospace;">88,500.00</div></div>
+        <div class="detail-form-item"><label>已入账金额</label><div class="value" style="justify-content:flex-end;font-family:Consolas,Monaco,monospace;">0.00</div></div>
+        <div class="detail-form-item"><label>是否入账</label><div class="value"><span class="tag tag-red">未入账</span></div></div>
+        <div class="detail-form-item"><label>是否付款</label><div class="value"><span class="tag tag-red">未付款</span></div></div>
+        <div class="detail-form-item"><label>付款日期</label><div class="value" style="color:#ccc;">—</div></div>
+      </div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">系统信息</div>
+      <div class="detail-form-grid">
+        <div class="detail-form-item"><label>创建日期</label><div class="value">2026-06-30 10:15</div></div>
+        <div class="detail-form-item"><label>修改日期</label><div class="value">2026-06-30 10:15</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn btn-primary" onclick="toggleDrawer('bankView')">关闭</button>
+  </div>
+</div>
+
+<!-- ==================== Modal: 银行交易明细 入账 ==================== -->
+<div class="modal-overlay" id="modal-accountEntry">
+  <div class="modal-dialog" style="width:560px;">
+    <div class="modal-title">
+      <span>入账操作</span>
+      <span class="modal-close" onclick="toggleModal('accountEntry')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="modal-form-group"><label>交易明细编号</label><input type="text" value="JYMX2026063000002" disabled style="background:#f5f5f5;"></div>
+      <div class="modal-form-group"><label>交易金额</label><input type="text" value="88,500.00" disabled style="background:#f5f5f5;"></div>
+      <div class="modal-form-group"><label>入账金额<span class="required">*</span></label><input type="text" placeholder="请输入入账金额"></div>
+      <div class="modal-form-group"><label>入账日期<span class="required">*</span></label><input type="text" placeholder="请选择入账日期"></div>
+      <div class="modal-form-group"><label>备注</label><textarea placeholder="请输入备注信息（选填）" style="min-height:60px;"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="toggleModal('accountEntry')">取消</button>
+      <button class="btn btn-primary" onclick="toggleModal('accountEntry')">确认入账</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Modal: 银行交易明细 批量入账 ==================== -->
+<div class="modal-overlay" id="modal-batchEntry">
+  <div class="modal-dialog" style="width:920px;">
+    <div class="modal-title">
+      <span>批量入账</span>
+      <span class="modal-close" onclick="toggleModal('batchEntry')">&times;</span>
+    </div>
+    <div class="modal-body" style="padding:16px 20px;">
+      <table>
+        <thead>
+          <tr>
+            <th>交易明细编号</th>
+            <th>对手信息</th>
+            <th>交易金额</th>
+            <th>已入账金额</th>
+            <th>入账金额</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>JYMX2026063000002</td>
+            <td>长春丰泰供应链有限公司</td>
+            <td class="amount">88,500.00</td>
+            <td class="amount">0.00</td>
+            <td><input type="text" placeholder="请输入入账金额" style="width:150px;height:30px;padding:0 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:13px;font-family:inherit;outline:none;"></td>
+          </tr>
+          <tr>
+            <td>JYMX2026062800003</td>
+            <td>上海远东国际货运代理</td>
+            <td class="amount">256,800.00</td>
+            <td class="amount">200,000.00</td>
+            <td><input type="text" placeholder="请输入入账金额" style="width:150px;height:30px;padding:0 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:13px;font-family:inherit;outline:none;"></td>
+          </tr>
+          <tr>
+            <td>JYMX2026062200005</td>
+            <td>天津港物流集团</td>
+            <td class="amount">340,000.00</td>
+            <td class="amount">0.00</td>
+            <td><input type="text" placeholder="请输入入账金额" style="width:150px;height:30px;padding:0 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:13px;font-family:inherit;outline:none;"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="toggleModal('batchEntry')">取消</button>
+      <button class="btn btn-primary" onclick="toggleModal('batchEntry')">确认入账</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Drawer: 印章使用记录 高级筛选 ==================== -->
+<div class="drawer-overlay" id="drawer-sealRecord"></div>
+<div class="drawer-panel" id="drawerPanel-sealRecord">
+  <div class="drawer-header">
+    <span>高级筛选</span>
+    <span class="drawer-close" onclick="toggleDrawer('sealRecord')">&times;</span>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-form-group"><label>使用记录编号</label><input type="text" placeholder="请输入记录编号"></div>
+    <div class="drawer-form-group"><label>印章名称</label><select><option>全部</option><option>合同章</option><option>业务专用章</option></select></div>
+    <div class="drawer-form-group"><label>关联业务单据</label><select><option>全部</option><option>合同签约</option><option>电子委托书</option><option>收入账单</option><option>成本账单</option></select></div>
+    <div class="drawer-form-group"><label>关联业务</label><select><option>全部</option><option>运输合同</option><option>仓储服务合同</option><option>合作协议</option><option>发票开具</option><option>介绍信</option></select></div>
+    <div class="drawer-form-group"><label>使用人</label><input type="text" placeholder="请输入使用人姓名"></div>
+    <div class="drawer-form-group"><label>使用日期</label><input type="text" placeholder="请选择日期范围"></div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn" onclick="toggleDrawer('sealRecord')">取消</button>
+    <button class="btn btn-primary" onclick="toggleDrawer('sealRecord')">确定</button>
+  </div>
+</div>
+
+<!-- ==================== Drawer: 印章使用记录 查看详情 ==================== -->
+<div class="drawer-overlay" id="drawerOverlay-sealView"></div>
+<div class="drawer-panel" id="drawerPanel-sealView">
+  <div class="drawer-header">
+    <span>印章使用记录详情</span>
+    <span class="drawer-close" onclick="toggleDrawer('sealView')">&times;</span>
+  </div>
+  <div class="drawer-body" style="padding:0;">
+    <div class="detail-section">
+      <div class="detail-section-title">基础信息</div>
+      <div class="detail-form-grid">
+        <div class="detail-form-item"><label>使用记录编号</label><div class="value">YYJL2026062800002</div></div>
+        <div class="detail-form-item"><label>印章名称</label><div class="value">业务专用章</div></div>
+        <div class="detail-form-item"><label>关联业务编号</label><div class="value"><span class="link">YWWT202606150002</span></div></div>
+        <div class="detail-form-item"><label>关联业务</label><div class="value">电子委托书</div></div>
+        <div class="detail-form-item"><label>相对方类型</label><div class="value">供应商</div></div>
+        <div class="detail-form-item"><label>企业名称</label><div class="value">长春丰泰</div></div>
+        <div class="detail-form-item"><label>业务文件</label><div class="value"><span class="link">查看</span></div></div>
+        <div class="detail-form-item"><label>使用人</label><div class="value">李四</div></div>
+        <div class="detail-form-item"><label>使用时间</label><div class="value">2026-06-28 14:30</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn btn-primary" onclick="toggleDrawer('sealView')">关闭</button>
+  </div>
+</div>
+
+<!-- ==================== Modal: 闸口放行配置 新增 ==================== -->
+<div class="modal-overlay" id="modal-gateAdd">
+  <div class="modal-dialog" style="width:520px;">
+    <div class="modal-title">
+      <span>新增闸口放行配置</span>
+      <span class="modal-close" onclick="toggleModal('gateAdd')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="modal-form-group"><label>预约类型<span class="required">*</span></label><select><option>请选择</option><option>提空</option><option>提重</option><option>落重</option><option>还空</option></select></div>
+      <div class="modal-form-group"><label>进站放行校验字段<span class="required">*</span></label><input type="text" placeholder="请输入校验字段，多个用逗号分隔"></div>
+      <div class="modal-form-group"><label>出站放行校验字段<span class="required">*</span></label><input type="text" placeholder="请输入校验字段，多个用逗号分隔"></div>
+      <div class="modal-form-group"><label>状态<span class="required">*</span></label><select><option>启用</option><option>禁用</option></select></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="toggleModal('gateAdd')">取消</button>
+      <button class="btn btn-primary" onclick="toggleModal('gateAdd')">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Drawer: 进站预约单 高级筛选 ==================== -->
+<div class="drawer-overlay" id="drawer-appointment"></div>
+<div class="drawer-panel" id="drawerPanel-appointment">
+  <div class="drawer-header">
+    <span>高级筛选</span>
+    <span class="drawer-close" onclick="toggleDrawer('appointment')">&times;</span>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-form-group"><label>预约单号</label><input type="text" placeholder="请输入预约单号"></div>
+    <div class="drawer-form-group"><label>预约类型</label><select><option>全部</option><option>提空</option><option>提重</option><option>落重</option><option>还空</option></select></div>
+    <div class="drawer-form-group"><label>预约进站时间</label><input type="text" placeholder="请选择时间范围"></div>
+    <div class="drawer-form-group"><label>集卡车车牌号</label><input type="text" placeholder="请输入车牌号"></div>
+    <div class="drawer-form-group"><label>司机姓名</label><input type="text" placeholder="请输入司机姓名"></div>
+    <div class="drawer-form-group"><label>手机号码</label><input type="text" placeholder="请输入手机号码"></div>
+    <div class="drawer-form-group"><label>预约单来源</label><select><option>全部</option><option>集装箱订单</option><option>手动新增</option></select></div>
+    <div class="drawer-form-group"><label>关联订单号</label><input type="text" placeholder="请输入关联订单号"></div>
+    <div class="drawer-form-group"><label>预约状态</label><select><option>全部</option><option>待审核</option><option>已通过</option><option>已拒绝</option><option>已取消</option></select></div>
+    <div class="drawer-form-group"><label>通行状态</label><select><option>全部</option><option>待进站</option><option>已进站</option><option>已出站</option></select></div>
+    <div class="drawer-form-group"><label>供应商</label><select><option>全部</option><option>中铁联集西安分公司</option><option>中铁联集青岛分公司</option><option>长春丰泰物流有限公司</option></select></div>
+    <div class="drawer-form-group"><label>关联堆场</label><select><option>全部</option><option>西安中心站</option><option>西安远海国铁物流堆场</option></select></div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn" onclick="toggleDrawer('appointment')">取消</button>
+    <button class="btn btn-primary" onclick="toggleDrawer('appointment')">确定</button>
+  </div>
+</div>
+
+<!-- ==================== Modal: 进站预约单 新增 ==================== -->
+<div class="modal-overlay" id="modal-appointmentAdd">
+  <div class="modal-dialog" style="width:720px;">
+    <div class="modal-title">
+      <span>新增进站预约单</span>
+      <span class="modal-close" onclick="toggleModal('appointmentAdd')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="modal-form-group"><label>预约单号<span class="required">*</span></label><input type="text" placeholder="系统自动生成" disabled style="background:#f5f5f5;"></div>
+      <div class="modal-form-group"><label>供应商<span class="required">*</span></label><select><option>请选择</option><option>中铁联集西安分公司</option><option>中铁联集青岛分公司</option><option>长春丰泰物流有限公司</option></select></div>
+      <div class="modal-form-group"><label>关联堆场<span class="required">*</span></label><select><option>请选择</option><option>西安中心站</option><option>西安远海国铁物流堆场</option></select></div>
+      <div class="modal-form-group"><label>预约类型<span class="required">*</span></label><select><option>请选择</option><option>提空</option><option>提重</option><option>落重</option><option>还空</option></select></div>
+      <div class="modal-form-group"><label>预约进站时间<span class="required">*</span></label><input type="text" placeholder="请选择预约进站时间"></div>
+      <div class="modal-form-group"><label>预约单来源<span class="required">*</span></label><select><option>请选择</option><option>集装箱订单</option><option>手动新增</option></select></div>
+      <div class="modal-form-group"><label>集卡车车牌号<span class="required">*</span></label><input type="text" placeholder="请输入集卡车车牌号"></div>
+      <div class="modal-form-group"><label>司机姓名<span class="required">*</span></label><input type="text" placeholder="请输入司机姓名"></div>
+      <div class="modal-form-group"><label>手机号码<span class="required">*</span></label><input type="text" placeholder="请输入手机号码"></div>
+      <div class="modal-form-group"><label>进站集装箱号</label><input type="text" placeholder="请输入进站集装箱号"></div>
+      <div class="modal-form-group"><label>出站集装箱号</label><input type="text" placeholder="请输入出站集装箱号"></div>
+      <div class="modal-form-group"><label>关联订单号</label><input type="text" placeholder="请输入关联订单号"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="toggleModal('appointmentAdd')">取消</button>
+      <button class="btn btn-primary" onclick="toggleModal('appointmentAdd')">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Modal: 进站预约单 审核 ==================== -->
+<div class="modal-overlay" id="modal-appointmentAudit">
+  <div class="modal-dialog" style="width:720px;">
+    <div class="modal-title">
+      <span>审核进站预约单</span>
+      <span class="modal-close" onclick="toggleModal('appointmentAudit')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="detail-section" style="padding:0 0 16px 0;">
+        <div class="detail-form-grid">
+          <div class="detail-form-item"><label>预约单号</label><div class="value">YYDH2026061700001</div></div>
+          <div class="detail-form-item"><label>预约类型</label><div class="value">提空</div></div>
+          <div class="detail-form-item"><label>预约进站时间</label><div class="value">2026-06-01 08:00</div></div>
+          <div class="detail-form-item"><label>集卡车车牌号</label><div class="value">京A12345</div></div>
+          <div class="detail-form-item"><label>司机姓名</label><div class="value">张三</div></div>
+          <div class="detail-form-item"><label>手机号码</label><div class="value">13800138001</div></div>
+          <div class="detail-form-item"><label>进站集装箱号</label><div class="value">—</div></div>
+          <div class="detail-form-item"><label>出站集装箱号</label><div class="value">—</div></div>
+          <div class="detail-form-item"><label>预约单来源</label><div class="value">集装箱订单</div></div>
+          <div class="detail-form-item"><label>关联订单号</label><div class="value">ZTLJXABD260601001</div></div>
+          <div class="detail-form-item"><label>供应商</label><div class="value">中铁联集西安分公司</div></div>
+          <div class="detail-form-item"><label>关联堆场</label><div class="value">西安中心站</div></div>
+        </div>
+      </div>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid #eee;">
+        <div style="font-size:13px;font-weight:600;color:#333;margin-bottom:12px;">审核意见</div>
+        <div style="display:flex;gap:24px;margin-bottom:12px;">
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:#555;cursor:pointer;"><input type="radio" name="auditOpinion" value="pass" checked onchange="document.getElementById('auditRejectReason').style.display='none'"> 通过</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:#555;cursor:pointer;"><input type="radio" name="auditOpinion" value="reject" onchange="document.getElementById('auditRejectReason').style.display='block'"> 拒绝</label>
+        </div>
+        <div id="auditRejectReason" style="display:none;">
+          <div style="font-size:13px;color:#555;margin-bottom:6px;">拒绝原因<span style="color:#ff4d4f;">*</span></div>
+          <textarea placeholder="请输入拒绝原因" style="width:100%;height:80px;padding:8px 10px;border:1px solid #d9d9d9;border-radius:4px;font-size:13px;font-family:inherit;color:#333;outline:none;resize:vertical;"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="toggleModal('appointmentAudit')">取消</button>
+      <button class="btn btn-primary" onclick="toggleModal('appointmentAudit')">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Modal: 进站预约单 编辑 ==================== -->
+<div class="modal-overlay" id="modal-appointmentEdit">
+  <div class="modal-dialog" style="width:720px;">
+    <div class="modal-title">
+      <span>编辑进站预约单</span>
+      <span class="modal-close" onclick="toggleModal('appointmentEdit')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="detail-section" style="padding:0 0 16px 0;">
+        <div class="detail-form-grid">
+          <div class="detail-form-item"><label>预约单号</label><div class="value" style="background:#f5f5f5;">YYDH2026061700001</div></div>
+          <div class="detail-form-item"><label>预约单来源</label><select style="flex:1;padding:7px 10px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;font-size:13px;font-family:inherit;color:#333;outline:none;"><option>集装箱订单</option><option>手动新增</option></select></div>
+          <div class="detail-form-item"><label>供应商</label><select style="flex:1;padding:7px 10px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;font-size:13px;font-family:inherit;color:#333;outline:none;"><option>中铁联集西安分公司</option><option>中铁联集青岛分公司</option><option>长春丰泰物流有限公司</option></select></div>
+          <div class="detail-form-item"><label>关联堆场</label><select style="flex:1;padding:7px 10px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;font-size:13px;font-family:inherit;color:#333;outline:none;"><option>西安中心站</option><option>西安远海国铁物流堆场</option></select></div>
+          <div class="detail-form-item"><label>预约类型</label><select style="flex:1;padding:7px 10px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;font-size:13px;font-family:inherit;color:#333;outline:none;"><option>提空</option><option>提重</option><option>落重</option><option>还空</option></select></div>
+          <div class="detail-form-item"><label>预约进站时间</label><input type="text" value="2026-06-01 08:00" style="flex:1;padding:7px 10px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;font-size:13px;font-family:inherit;color:#333;outline:none;"></div>
+          <div class="detail-form-item"><label>集卡车车牌号</label><input type="text" value="京A12345" style="flex:1;padding:7px 10px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;font-size:13px;font-family:inherit;color:#333;outline:none;"></div>
+          <div class="detail-form-item"><label>司机姓名</label><input type="text" value="张三" style="flex:1;padding:7px 10px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;font-size:13px;font-family:inherit;color:#333;outline:none;"></div>
+          <div class="detail-form-item"><label>手机号码</label><input type="text" value="13800138001" style="flex:1;padding:7px 10px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;font-size:13px;font-family:inherit;color:#333;outline:none;"></div>
+          <div class="detail-form-item"><label>进站集装箱号</label><input type="text" value="—" style="flex:1;padding:7px 10px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;font-size:13px;font-family:inherit;color:#333;outline:none;"></div>
+          <div class="detail-form-item"><label>关联订单号</label><input type="text" value="ZTLJXABD260601001" style="flex:1;padding:7px 10px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;font-size:13px;font-family:inherit;color:#333;outline:none;"></div>
+          <div class="detail-form-item"><label>预约状态</label><div class="value" style="background:#f5f5f5;">待审核</div></div>
+          <div class="detail-form-item"><label>通行状态</label><div class="value" style="background:#f5f5f5;">待进站</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="toggleModal('appointmentEdit')">取消</button>
+      <button class="btn btn-primary" onclick="toggleModal('appointmentEdit')">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Modal: 进站预约单 编辑（已拒绝） ==================== -->
+<div class="modal-overlay" id="modal-appointmentEditRejected">
+  <div class="modal-dialog" style="width:720px;">
+    <div class="modal-title">
+      <span>编辑进站预约单</span>
+      <span class="modal-close" onclick="toggleModal('appointmentEditRejected')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="detail-section" style="padding:0 0 16px 0;">
+        <div class="detail-section-title" style="font-size:13px;color:#999;font-weight:400;border:none;padding:0 0 12px 0;margin:0;">以下为预约单原始信息</div>
+        <div class="detail-form-grid">
+          <div class="detail-form-item"><label>预约单号</label><div class="value" style="background:#f5f5f5;">YYDH2026061700003</div></div>
+          <div class="detail-form-item"><label>预约单来源</label><div class="value" style="background:#f5f5f5;">手动新增</div></div>
+          <div class="detail-form-item"><label>供应商</label><div class="value" style="background:#f5f5f5;">长春丰泰物流有限公司</div></div>
+          <div class="detail-form-item"><label>关联堆场</label><div class="value" style="background:#f5f5f5;">西安中心站</div></div>
+          <div class="detail-form-item"><label>预约类型</label><div class="value" style="background:#f5f5f5;">落重</div></div>
+          <div class="detail-form-item"><label>预约进站时间</label><div class="value" style="background:#f5f5f5;">2026-06-01 14:00</div></div>
+          <div class="detail-form-item"><label>集卡车车牌号</label><div class="value" style="background:#f5f5f5;">京C11111</div></div>
+          <div class="detail-form-item"><label>司机姓名</label><div class="value" style="background:#f5f5f5;">王五</div></div>
+          <div class="detail-form-item"><label>手机号码</label><div class="value" style="background:#f5f5f5;">13800138003</div></div>
+          <div class="detail-form-item"><label>进站集装箱号</label><div class="value" style="background:#f5f5f5;">OOLU3456789</div></div>
+          <div class="detail-form-item"><label>关联订单号</label><div class="value" style="background:#f5f5f5;">—</div></div>
+        </div>
+      </div>
+      <div class="detail-section" style="padding:16px 0 0 0;border-top:1px dashed #e8e8e8;margin-top:8px;">
+        <div class="detail-section-title" style="font-size:13px;color:#ff4d4f;font-weight:600;border:none;padding:0 0 12px 0;margin:0;">拒绝信息</div>
+        <div class="detail-form-grid">
+          <div class="detail-form-item"><label>拒绝原因</label><div class="value" style="color:#ff4d4f;border:1px solid #ffccc7;background:#fff2f0;">集卡车信息与预约信息不符</div></div>
+          <div class="detail-form-item"><label>预约状态</label><div class="value"><span class="tag tag-red">已拒绝</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="toggleModal('appointmentEditRejected')">取消</button>
+      <button class="btn btn-primary" onclick="toggleModal('appointmentEditRejected')">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Modal: 进站预约单 查看 ==================== -->
+<div class="modal-overlay" id="modal-appointmentView">
+  <div class="modal-dialog" style="width:720px;">
+    <div class="modal-title">
+      <span>查看进站预约单</span>
+      <span class="modal-close" onclick="toggleModal('appointmentView')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="detail-section" style="padding:0;">
+        <div class="detail-form-grid">
+          <div class="detail-form-item"><label>预约单号</label><div class="value">YYDH2026061700002</div></div>
+          <div class="detail-form-item"><label>预约类型</label><div class="value">提重</div></div>
+          <div class="detail-form-item"><label>预约进站时间</label><div class="value">2026-06-01 10:00</div></div>
+          <div class="detail-form-item"><label>集卡车车牌号</label><div class="value">京B67890</div></div>
+          <div class="detail-form-item"><label>司机姓名</label><div class="value">李四</div></div>
+          <div class="detail-form-item"><label>手机号码</label><div class="value">13800138002</div></div>
+          <div class="detail-form-item"><label>进站集装箱号</label><div class="value">—</div></div>
+          <div class="detail-form-item"><label>出站集装箱号</label><div class="value">—</div></div>
+          <div class="detail-form-item"><label>预约单来源</label><div class="value">集装箱订单</div></div>
+          <div class="detail-form-item"><label>关联订单号</label><div class="value">ZTLJXABD260601002</div></div>
+          <div class="detail-form-item"><label>供应商</label><div class="value">中铁联集青岛分公司</div></div>
+          <div class="detail-form-item"><label>关联堆场</label><div class="value">西安远海国铁物流堆场</div></div>
+          <div class="detail-form-item"><label>预约状态</label><div class="value"><span class="tag tag-green">已通过</span></div></div>
+          <div class="detail-form-item"><label>通行状态</label><div class="value"><span class="tag tag-green">已出站</span></div></div>
+          <div class="detail-form-item"><label>实际进站时间</label><div class="value">2026-06-01 08:30</div></div>
+          <div class="detail-form-item"><label>实际出站时间</label><div class="value">2026-06-01 11:00</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="toggleModal('appointmentView')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Modal: 进站预约单 取消确认 ==================== -->
+<div class="modal-overlay" id="modal-appointmentCancel">
+  <div class="modal-dialog" style="width:400px;">
+    <div class="modal-title">
+      <span>提示</span>
+      <span class="modal-close" onclick="toggleModal('appointmentCancel')">&times;</span>
+    </div>
+    <div class="modal-body" style="text-align:center;padding:32px 20px;font-size:14px;color:#333;">
+      是否取消当前预约？
+    </div>
+    <div class="modal-footer" style="justify-content:center;">
+      <button class="btn" onclick="toggleModal('appointmentCancel')">否</button>
+      <button class="btn btn-primary" onclick="toggleModal('appointmentCancel')">是</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== Page switching =====
+// Map: pageId -> menu-group
+var pageMenuMap = {
+  vehicleOperation: 'fleet',
+  bankDetail: 'income',
+  sealRecord: 'contract',
+  gateConfig: 'baseData',
+  appointment: 'bizMgmt'
+};
+
+function switchPage(pageId) {
+  // 1. Hide all pages, show target
+  var pages = document.querySelectorAll('.page-content');
+  for (var i = 0; i < pages.length; i++) {
+    pages[i].classList.remove('active');
+  }
+  var target = document.getElementById('page-' + pageId);
+  if (target) target.classList.add('active');
+
+  // Page name mapping
+  var pageNames = {
+    'sealRecord': '印章使用记录',
+    'appointment': '进站预约单',
+    'bankDetail': '银行交易明细',
+    'gateConfig': '闸口放行配置',
+    'vehicleOperation': '车辆作业'
+  };
+
+  // 2. Update nav-tabs
+  var tabs = document.querySelectorAll('.nav-tab');
+  var tabFound = false;
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove('active');
+    if (tabs[i].getAttribute('data-page') === pageId) {
+      tabs[i].classList.add('active');
+      tabFound = true;
+    }
+  }
+
+  // If tab was closed, recreate it
+  if (!tabFound && pageNames[pageId]) {
+    var tabsBar = document.querySelector('.nav-tabs-bar');
+    if (tabsBar) {
+      var newTab = document.createElement('div');
+      newTab.className = 'nav-tab active';
+      newTab.setAttribute('data-page', pageId);
+      newTab.setAttribute('onclick', "switchPage('" + pageId + "')");
+      newTab.innerHTML = '<span>' + pageNames[pageId] + '</span><span class="tab-close" onclick="event.stopPropagation();closePage(\'' + pageId + '\')">x</span>';
+      tabsBar.appendChild(newTab);
+    }
+  }
+
+  // 3. Update sidebar
+  // Remove active from all menu-items and sub-menu li
+  var menuItems = document.querySelectorAll('.menu-item');
+  var subItems = document.querySelectorAll('.sub-menu li');
+  for (var i = 0; i < menuItems.length; i++) menuItems[i].classList.remove('active');
+  for (var i = 0; i < subItems.length; i++) subItems[i].classList.remove('active');
+
+  // Collapse all sub-menus
+  var allSubs = document.querySelectorAll('.sub-menu');
+  var allArrows = document.querySelectorAll('.arrow');
+  for (var i = 0; i < allSubs.length; i++) allSubs[i].classList.remove('open');
+  for (var i = 0; i < allArrows.length; i++) allArrows[i].classList.remove('open');
+
+  // Find the sub-menu li that matches the page
+  var activeSubLi = null;
+  for (var i = 0; i < subItems.length; i++) {
+    var onclick = subItems[i].getAttribute('onclick');
+    if (onclick && onclick.indexOf("'" + pageId + "'") > -1) {
+      activeSubLi = subItems[i];
+      break;
+    }
+  }
+
+  if (activeSubLi) {
+    activeSubLi.classList.add('active');
+    // Find parent menu-section
+    var parentSub = activeSubLi.parentElement;
+    var parentSection = parentSub.parentElement;
+    if (parentSection) {
+      var parentMenuItem = parentSection.querySelector('.menu-item');
+      if (parentMenuItem) parentMenuItem.classList.add('active');
+      // Open this sub-menu
+      parentSub.classList.add('open');
+      var arrow = parentMenuItem.querySelector('.arrow');
+      if (arrow) arrow.classList.add('open');
+    }
+  }
+}
+
+// ===== Close a page tab =====
+function closePage(pageId) {
+  // Find and remove the tab
+  var tab = document.querySelector('.nav-tab[data-page="' + pageId + '"]');
+  if (!tab) return;
+
+  // Check if this is the active tab
+  var isActive = tab.classList.contains('active');
+
+  // Remove the tab
+  tab.remove();
+
+  // If the closed tab was active, switch to an adjacent tab
+  if (isActive) {
+    var remainingTabs = document.querySelectorAll('.nav-tab');
+    if (remainingTabs.length > 0) {
+      var nextTab = remainingTabs[0]; // switch to first remaining tab
+      var nextPage = nextTab.getAttribute('data-page');
+      switchPage(nextPage);
+    }
+  }
+
+  // Clear sidebar active state for the closed page
+  var menuItems = document.querySelectorAll('.menu-item');
+  var subItems = document.querySelectorAll('.sub-menu li');
+  for (var i = 0; i < menuItems.length; i++) menuItems[i].classList.remove('active');
+  for (var i = 0; i < subItems.length; i++) subItems[i].classList.remove('active');
+
+  // If there's an active tab, sync its sidebar state
+  var currentActive = document.querySelector('.nav-tab.active');
+  if (currentActive) {
+    var currentPage = currentActive.getAttribute('data-page');
+    var activeSubLi = null;
+    for (var i = 0; i < subItems.length; i++) {
+      var onclick = subItems[i].getAttribute('onclick');
+      if (onclick && onclick.indexOf("'" + currentPage + "'") > -1) {
+        activeSubLi = subItems[i];
+        break;
+      }
+    }
+    if (activeSubLi) {
+      activeSubLi.classList.add('active');
+      var parentSub = activeSubLi.parentElement;
+      var parentSection = parentSub.parentElement;
+      if (parentSection) {
+        var parentMenuItem = parentSection.querySelector('.menu-item');
+        if (parentMenuItem) parentMenuItem.classList.add('active');
+        parentSub.classList.add('open');
+        var arrow = parentMenuItem.querySelector('.arrow');
+        if (arrow) arrow.classList.add('open');
+      }
+    }
+  }
+}
+
+// ===== Menu toggle =====
+function toggleMenu(groupId) {
+  var sub = document.getElementById('sub-' + groupId);
+  var section = sub.parentElement;
+  var menuItem = section.querySelector('.menu-item');
+  var arrow = menuItem.querySelector('.arrow');
+
+  // Collapse all other sub-menus first
+  var allSubs = document.querySelectorAll('.sub-menu');
+  var allArrows = document.querySelectorAll('.arrow');
+  for (var i = 0; i < allSubs.length; i++) {
+    if (allSubs[i].id !== 'sub-' + groupId) {
+      allSubs[i].classList.remove('open');
+    }
+  }
+  for (var i = 0; i < allArrows.length; i++) {
+    var parentItem = allArrows[i].parentElement;
+    if (parentItem && parentItem !== menuItem) {
+      allArrows[i].classList.remove('open');
+    }
+  }
+
+  // Toggle current
+  if (sub.classList.contains('open')) {
+    sub.classList.remove('open');
+    arrow.classList.remove('open');
+  } else {
+    sub.classList.add('open');
+    arrow.classList.add('open');
+  }
+}
+
+// ===== Yard tab switching =====
+function switchYardTab(tabId) {
+  var tabs = document.querySelectorAll('.yard-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove('active');
+  }
+  document.getElementById('yard-' + tabId).classList.add('active');
+}
+
+// ===== Order dialog =====
+function showOrderDialog() {
+  var menuItems = document.querySelectorAll('.menu-item');
+  var subItems = document.querySelectorAll('.sub-menu li');
+  for (var i = 0; i < menuItems.length; i++) menuItems[i].classList.remove('active');
+  for (var i = 0; i < subItems.length; i++) subItems[i].classList.remove('active');
+
+  // Activate bizMgmt menu
+  var bizSection = document.querySelector('#sub-bizMgmt').parentElement;
+  var bizMenuItem = bizSection.querySelector('.menu-item');
+  bizMenuItem.classList.add('active');
+  document.getElementById('sub-bizMgmt').classList.add('open');
+  var arrow = bizMenuItem.querySelector('.arrow');
+  if (arrow) arrow.classList.add('open');
+
+  // Find the 确认订单 li
+  var lis = document.querySelectorAll('#sub-bizMgmt li');
+  for (var i = 0; i < lis.length; i++) {
+    if (lis[i].textContent.trim() === '确认订单') {
+      lis[i].classList.add('active');
+      break;
+    }
+  }
+
+  document.getElementById('orderDialogModal').classList.add('active');
+}
+
+function closeOrderDialog() {
+  document.getElementById('orderDialogModal').classList.remove('active');
+}
+
+// ===== Generic drawer toggle =====
+function toggleDrawer(id) {
+  var overlay = document.getElementById('drawer-' + id);
+  var panel = document.getElementById('drawerPanel-' + id);
+  if (!overlay || !panel) {
+    // Fallback: try the overlay-named pattern
+    overlay = document.getElementById('drawerOverlay-' + id);
+    panel = document.getElementById('drawerPanel-' + id);
+  }
+  if (!overlay || !panel) return;
+  var isActive = overlay.classList.contains('active');
+  if (isActive) {
+    overlay.classList.remove('active');
+    panel.classList.remove('active');
+    document.body.style.overflow = '';
+  } else {
+    overlay.classList.add('active');
+    setTimeout(function() { panel.classList.add('active'); }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+// ===== Special drawer toggles for view modals =====
+function toggleViewDrawer(id) {
+  var overlay = document.getElementById('drawerOverlay-' + id);
+  var panel = document.getElementById('drawerPanel-' + id);
+  if (!overlay || !panel) return;
+  var isActive = overlay.classList.contains('active');
+  if (isActive) {
+    overlay.classList.remove('active');
+    panel.classList.remove('active');
+    document.body.style.overflow = '';
+  } else {
+    overlay.classList.add('active');
+    setTimeout(function() { panel.classList.add('active'); }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+// ===== Generic modal toggle =====
+function toggleModal(id) {
+  var modal = document.getElementById('modal-' + id);
+  if (!modal) return;
+  modal.classList.toggle('active');
+}
+</script>
+</body>
+</html>
